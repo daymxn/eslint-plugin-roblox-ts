@@ -9,7 +9,6 @@ export const luaTruthiness = makeRule<[], "falsyStringNumberCheck">({
 		type: "problem",
 		docs: {
 			description: "Warns against falsy strings and numbers",
-			recommended: "recommended",
 			requiresTypeChecking: true,
 		},
 		schema: [],

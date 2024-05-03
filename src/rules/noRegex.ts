@@ -18,7 +18,7 @@ export const noRegex = makeRule<[], "regexViolation">({
 	defaultOptions: [],
 	create(context) {
 		const sourceCode = context.sourceCode;
-		
+
 		return {
 			Literal(node) {
 				const token = sourceCode.getFirstToken(node);

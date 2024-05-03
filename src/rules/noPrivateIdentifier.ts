@@ -20,7 +20,7 @@ export const noPrivateIdentifier = makeRule<[], "privateIdentifierViolation">({
 	},
 	defaultOptions: [],
 	create(context) {
-		const service = ESLintUtils.getParserServices(context);		
+		const service = ESLintUtils.getParserServices(context);
 		return {
 			PropertyDefinition(node) {
 				const tsNode = service.esTreeNodeToTSNodeMap.get(node.key);

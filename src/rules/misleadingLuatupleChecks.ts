@@ -23,7 +23,7 @@ export const misleadingLuatupleChecks = makeRule<[], "bannedLuaTupleCheck">({
 		const checker = service.program.getTypeChecker();
 
 		function checkTruthy(node: TSESTree.Node) {
-			const { aliasSymbol } = getConstrainedType(service, checker!, node);
+			const { aliasSymbol } = getConstrainedType(service, checker, node);
 
 			if (aliasSymbol && aliasSymbol.escapedName === "LuaTuple")
 				context.report({

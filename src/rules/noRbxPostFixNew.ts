@@ -20,7 +20,7 @@ export const noRbxPostFixNew = makeRule<[], ViolationType>({
 		type: "problem",
 		docs: {
 			description: "Bans calling .new() on Roblox objects (helps transition to TS)",
-			recommended: "error",
+			recommended: "recommended",
 			requiresTypeChecking: true,
 		},
 		fixable: "code",
@@ -32,7 +32,8 @@ export const noRbxPostFixNew = makeRule<[], ViolationType>({
 	defaultOptions: [],
 	create(context) {
 		const service = getParserServices(context);
-		const checker = service.program.getTypeChecker();
+		const checker = service.program?.getTypeChecker();
+		if (!checker) return {};
 
 		return {
 			CallExpression(node) {

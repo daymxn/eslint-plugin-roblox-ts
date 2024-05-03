@@ -1,4 +1,4 @@
-import { ESLintUtils, ParserServices, TSESLint, TSESTree } from "@typescript-eslint/experimental-utils";
+import { ESLintUtils, TSESTree, TSESLint, ParserServices } from "@typescript-eslint/utils";
 import ts from "typescript";
 
 export const makeRule = ESLintUtils.RuleCreator(name => {
@@ -34,8 +34,8 @@ export type ExpressionWithTest =
 export function getParserServices<TMessageIds extends string, TOptions extends Array<unknown>>(
 	context: TSESLint.RuleContext<TMessageIds, TOptions>,
 ): Required<ParserServices> {
-	const { parserServices } = context;
-	if (!parserServices || !parserServices.program || !parserServices.esTreeNodeToTSNodeMap) {
+	const { parserServices } = context.sourceCode;
+	if (!parserServices?.program || !parserServices.esTreeNodeToTSNodeMap) {
 		/**
 		 * The user needs to have configured "project" in their parserOptions
 		 * for @typescript-eslint/parser
@@ -44,6 +44,7 @@ export function getParserServices<TMessageIds extends string, TOptions extends A
 			'You have used a rule which requires parserServices to be generated. You must therefore provide a value for the "parserOptions.project" property for @typescript-eslint/parser.',
 		);
 	}
+
 	return parserServices as Required<ParserServices>;
 }
 

@@ -1,4 +1,4 @@
-import { AST_NODE_TYPES, TSESTree } from "@typescript-eslint/experimental-utils";
+import { AST_NODE_TYPES, TSESTree } from "@typescript-eslint/utils";
 import { ExpressionWithTest, getConstrainedType, getParserServices, makeRule } from "../util/rules";
 
 export const misleadingLuatupleChecksName = "misleading-luatuple-checks";
@@ -8,7 +8,7 @@ export const misleadingLuatupleChecks = makeRule<[], "bannedLuaTupleCheck">({
 		type: "problem",
 		docs: {
 			description: "Bans LuaTuples boolean expressions",
-			recommended: "error",
+			recommended: "recommended",
 			requiresTypeChecking: true,
 		},
 		schema: [],
@@ -20,10 +20,11 @@ export const misleadingLuatupleChecks = makeRule<[], "bannedLuaTupleCheck">({
 	defaultOptions: [],
 	create(context) {
 		const service = getParserServices(context);
-		const checker = service.program.getTypeChecker();
+		const checker = service.program?.getTypeChecker();
+		if (!checker) return {};
 
 		function checkTruthy(node: TSESTree.Node) {
-			const { aliasSymbol } = getConstrainedType(service, checker, node);
+			const { aliasSymbol } = getConstrainedType(service, checker!, node);
 
 			if (aliasSymbol && aliasSymbol.escapedName === "LuaTuple")
 				context.report({

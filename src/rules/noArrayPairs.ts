@@ -12,7 +12,7 @@ export const noArrayPairs = makeRule<[], "arrayPairsViolation" | "arrayIPairsVio
 		type: "problem",
 		docs: {
 			description: "Disallows usage of pairs() and ipairs() with Array<T>",
-			recommended: "warn",
+			recommended: "recommended",
 			requiresTypeChecking: true,
 		},
 		schema: [],
@@ -24,7 +24,9 @@ export const noArrayPairs = makeRule<[], "arrayPairsViolation" | "arrayIPairsVio
 	defaultOptions: [],
 	create(context) {
 		const service = getParserServices(context);
-		const checker = service.program.getTypeChecker();
+		const checker = service.program?.getTypeChecker();
+		if (!checker) return {};
+
 		return {
 			CallExpression(esNode) {
 				const tsNode = service.esTreeNodeToTSNodeMap.get(esNode);
@@ -43,7 +45,6 @@ export const noArrayPairs = makeRule<[], "arrayPairsViolation" | "arrayIPairsVio
 								messageId: "arrayIPairsViolation",
 							});
 						}
-					} else {
 					}
 				}
 			},

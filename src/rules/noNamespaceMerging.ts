@@ -30,7 +30,7 @@ export const noNamespaceMerging = makeRule<[], "namespaceMergingViolation">({
 		type: "problem",
 		docs: {
 			description: "Bans namespace declaration merging",
-			recommended: "error",
+			recommended: "recommended",
 			requiresTypeChecking: true,
 		},
 		messages: {
@@ -41,7 +41,9 @@ export const noNamespaceMerging = makeRule<[], "namespaceMergingViolation">({
 	defaultOptions: [],
 	create(context) {
 		const service = getParserServices(context);
-		const checker = service.program.getTypeChecker();
+		const checker = service.program?.getTypeChecker();
+		if (!checker) return {};
+		
 		return {
 			TSModuleDeclaration(node) {
 				const tsNode = service.esTreeNodeToTSNodeMap.get(node);

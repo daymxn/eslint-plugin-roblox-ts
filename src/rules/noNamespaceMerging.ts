@@ -1,5 +1,6 @@
 import ts from "typescript";
-import { getParserServices, makeRule } from "../util/rules";
+import { makeRule } from "../util/rules";
+import { ESLintUtils } from "@typescript-eslint/utils";
 
 function isDeclarationOfNamespace(declaration: ts.Declaration) {
 	if (ts.isModuleDeclaration(declaration) && ts.isInstantiatedModule(declaration, false)) {
@@ -40,10 +41,9 @@ export const noNamespaceMerging = makeRule<[], "namespaceMergingViolation">({
 	},
 	defaultOptions: [],
 	create(context) {
-		const service = getParserServices(context);
-		const checker = service.program?.getTypeChecker();
-		if (!checker) return {};
-		
+		const service = ESLintUtils.getParserServices(context);
+		const checker = service.program.getTypeChecker();
+
 		return {
 			TSModuleDeclaration(node) {
 				const tsNode = service.esTreeNodeToTSNodeMap.get(node);

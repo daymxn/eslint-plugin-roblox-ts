@@ -1,4 +1,5 @@
-import { getConstrainedTypeAtLocation, getParserServices, makeRule } from "../util/rules";
+import { ESLintUtils } from "@typescript-eslint/utils";
+import { getConstrainedTypeAtLocation, makeRule } from "../util/rules";
 
 const dataTypes = ["CFrame", "UDim", "UDim2", "Vector2", "Vector2int16", "Vector3", "Vector3int16"];
 const mathOperationSymbolsToMacroNames = new Map([
@@ -33,9 +34,8 @@ export const noObjectMath = makeRule<[], ViolationType>({
 	},
 	defaultOptions: [],
 	create(context) {
-		const service = getParserServices(context);
-		const checker = service.program?.getTypeChecker();
-		if (!checker) return {};
+		const service = ESLintUtils.getParserServices(context);
+		const checker = service.program.getTypeChecker();
 
 		return {
 			BinaryExpression(node) {

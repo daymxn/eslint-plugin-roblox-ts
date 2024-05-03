@@ -1,6 +1,6 @@
-import { AST_NODE_TYPES } from "@typescript-eslint/utils";
+import { AST_NODE_TYPES, ESLintUtils } from "@typescript-eslint/utils";
 import ts from "typescript";
-import { getParserServices, makeRule } from "../util/rules";
+import { makeRule } from "../util/rules";
 
 export const noExportAssignmentLetName = "no-export-assignment-let";
 export const noExportAssignmentLet = makeRule<[], "noExportAssignmentLetViolation">({
@@ -20,7 +20,7 @@ export const noExportAssignmentLet = makeRule<[], "noExportAssignmentLetViolatio
 	},
 	defaultOptions: [],
 	create(context) {
-		const service = getParserServices(context);
+		const service = ESLintUtils.getParserServices(context);
 		return {
 			TSExportAssignment(node) {
 				const tsNode = service.esTreeNodeToTSNodeMap.get(node);

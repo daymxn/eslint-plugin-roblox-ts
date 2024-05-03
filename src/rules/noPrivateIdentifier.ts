@@ -1,5 +1,6 @@
 import ts from "typescript";
-import { getParserServices, makeRule } from "../util/rules";
+import { makeRule } from "../util/rules";
+import { ESLintUtils } from "@typescript-eslint/utils";
 
 export const noPrivateIdentifierName = "no-private-identifier";
 export const noPrivateIdentifier = makeRule<[], "privateIdentifierViolation">({
@@ -19,7 +20,7 @@ export const noPrivateIdentifier = makeRule<[], "privateIdentifierViolation">({
 	},
 	defaultOptions: [],
 	create(context) {
-		const service = getParserServices(context);
+		const service = ESLintUtils.getParserServices(context);		
 		return {
 			PropertyDefinition(node) {
 				const tsNode = service.esTreeNodeToTSNodeMap.get(node.key);

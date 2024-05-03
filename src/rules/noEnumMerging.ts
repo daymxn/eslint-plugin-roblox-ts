@@ -1,4 +1,5 @@
-import { getParserServices, makeRule } from "../util/rules";
+import { ESLintUtils } from "@typescript-eslint/utils";
+import { makeRule } from "../util/rules";
 
 export const noEnumMergingName = "no-enum-merging";
 export const noEnumMerging = makeRule<[], "enumMergingViolation">({
@@ -17,10 +18,8 @@ export const noEnumMerging = makeRule<[], "enumMergingViolation">({
 	},
 	defaultOptions: [],
 	create(context) {
-		const service = getParserServices(context);
-		const checker = service.program?.getTypeChecker();
-		if (!checker) return {};
-
+		const service = ESLintUtils.getParserServices(context);
+		const checker = service.program.getTypeChecker();
 		return {
 			TSEnumDeclaration(node) {
 				const tsNode = service.esTreeNodeToTSNodeMap.get(node);

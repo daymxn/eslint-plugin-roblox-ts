@@ -1,5 +1,6 @@
 import ts from "typescript";
-import { getConstrainedTypeAtLocation, getParserServices, makeRule } from "../util/rules";
+import { getConstrainedTypeAtLocation, makeRule } from "../util/rules";
+import { ESLintUtils } from "@typescript-eslint/utils";
 
 const dataTypes = [
 	"CFrameConstructor",
@@ -31,9 +32,8 @@ export const noRbxPostFixNew = makeRule<[], ViolationType>({
 	},
 	defaultOptions: [],
 	create(context) {
-		const service = getParserServices(context);
-		const checker = service.program?.getTypeChecker();
-		if (!checker) return {};
+		const service = ESLintUtils.getParserServices(context);
+		const checker = service.program.getTypeChecker();
 
 		return {
 			CallExpression(node) {

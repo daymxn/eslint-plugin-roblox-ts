@@ -1,6 +1,6 @@
-import { TSESTree } from "@typescript-eslint/utils";
+import { ESLintUtils, TSESTree } from "@typescript-eslint/utils";
 import ts from "typescript";
-import { getParserServices, makeRule } from "../util/rules";
+import { makeRule } from "../util/rules";
 import { skipDownwards } from "../util/traversal";
 import { getType, getTypeArguments, isAnyType, isArrayType, isDefinitelyType } from "../util/types";
 
@@ -50,18 +50,16 @@ export const noAny = makeRule<[], "anyViolation">({
 
 		return {
 			BinaryExpression(esNode) {
-				const service = getParserServices(context);
-				const checker = service.program?.getTypeChecker();
-				if (!checker) return;
+				const service = ESLintUtils.getParserServices(context);
+				const checker = service.program.getTypeChecker();
 				const tsNode = service.esTreeNodeToTSNodeMap.get(esNode);
 				validateNotAnyType(checker, esNode.left, tsNode.left);
 				validateNotAnyType(checker, esNode.right, tsNode.right);
 			},
 
 			UnaryExpression(esNode) {
-				const service = getParserServices(context);
-				const checker = service.program?.getTypeChecker();
-				if (!checker) return;
+				const service = ESLintUtils.getParserServices(context);
+				const checker = service.program.getTypeChecker();
 				const tsNode = service.esTreeNodeToTSNodeMap.get(esNode);
 				if (ts.isPrefixUnaryExpression(tsNode) || ts.isPostfixUnaryExpression(tsNode)) {
 					validateNotAnyType(checker, esNode.argument, tsNode.operand);
@@ -69,30 +67,26 @@ export const noAny = makeRule<[], "anyViolation">({
 			},
 
 			CallExpression(esNode) {
-				const service = getParserServices(context);
-				const checker = service.program?.getTypeChecker();
-				if (!checker) return;
+				const service = ESLintUtils.getParserServices(context);
+				const checker = service.program.getTypeChecker();
 				validateNotAnyType(checker, esNode.callee, service.esTreeNodeToTSNodeMap.get(esNode).expression);
 			},
 
 			NewExpression(esNode) {
-				const service = getParserServices(context);
-				const checker = service.program?.getTypeChecker();
-				if (!checker) return;
+				const service = ESLintUtils.getParserServices(context);
+				const checker = service.program.getTypeChecker();
 				validateNotAnyType(checker, esNode.callee, service.esTreeNodeToTSNodeMap.get(esNode).expression);
 			},
 
 			SpreadElement(esNode) {
-				const service = getParserServices(context);
-				const checker = service.program?.getTypeChecker();
-				if (!checker) return;
+				const service = ESLintUtils.getParserServices(context);
+				const checker = service.program.getTypeChecker();
 				validateNotAnyType(checker, esNode.argument, service.esTreeNodeToTSNodeMap.get(esNode).expression);
 			},
 
 			MemberExpression(esNode) {
-				const service = getParserServices(context);
-				const checker = service.program?.getTypeChecker();
-				if (!checker) return;
+				const service = ESLintUtils.getParserServices(context);
+				const checker = service.program.getTypeChecker();
 				const tsNode = service.esTreeNodeToTSNodeMap.get(esNode);
 				validateNotAnyType(checker, esNode.object, tsNode.expression);
 				if (ts.isElementAccessExpression(tsNode)) {

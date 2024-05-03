@@ -1,4 +1,5 @@
-import { getParserServices, makeRule } from "../util/rules";
+import { ESLintUtils } from "@typescript-eslint/utils";
+import { makeRule } from "../util/rules";
 import { getType, isArrayType, isPossiblyType } from "../util/types";
 
 function makeViolationText(name: string) {
@@ -23,9 +24,8 @@ export const noArrayPairs = makeRule<[], "arrayPairsViolation" | "arrayIPairsVio
 	},
 	defaultOptions: [],
 	create(context) {
-		const service = getParserServices(context);
-		const checker = service.program?.getTypeChecker();
-		if (!checker) return {};
+		const service = ESLintUtils.getParserServices(context);
+		const checker = service.program.getTypeChecker();
 
 		return {
 			CallExpression(esNode) {

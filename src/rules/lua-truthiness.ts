@@ -24,7 +24,7 @@ export const luaTruthiness = makeRule<[], "falsyStringNumberCheck">({
 		const checker = service.program.getTypeChecker();
 
 		function checkTruthy(node: TSESTree.Node) {
-			const type = getType(checker!, service.esTreeNodeToTSNodeMap.get(node));
+			const type = getType(checker, service.esTreeNodeToTSNodeMap.get(node));
 
 			const isAssignableToZero = isPossiblyType(type, t => isNumberLiteralType(t, 0));
 			const isAssignableToNaN = isPossiblyType(type, t => isNaNType(t));

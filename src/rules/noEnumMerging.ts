@@ -1,4 +1,5 @@
-import { getParserServices, makeRule } from "../util/rules";
+import { ESLintUtils } from "@typescript-eslint/utils";
+import { makeRule } from "../util/rules";
 
 export const noEnumMergingName = "no-enum-merging";
 export const noEnumMerging = makeRule<[], "enumMergingViolation">({
@@ -7,7 +8,7 @@ export const noEnumMerging = makeRule<[], "enumMergingViolation">({
 		type: "problem",
 		docs: {
 			description: "Bans enum declaration merging",
-			recommended: "error",
+			recommended: "recommended",
 			requiresTypeChecking: true,
 		},
 		messages: {
@@ -17,13 +18,13 @@ export const noEnumMerging = makeRule<[], "enumMergingViolation">({
 	},
 	defaultOptions: [],
 	create(context) {
-		const service = getParserServices(context);
+		const service = ESLintUtils.getParserServices(context);
 		const checker = service.program.getTypeChecker();
 		return {
 			TSEnumDeclaration(node) {
 				const tsNode = service.esTreeNodeToTSNodeMap.get(node);
 				const symbol = checker.getSymbolAtLocation(tsNode.name);
-				if (symbol && symbol.declarations && symbol.declarations.length > 1) {
+				if (symbol?.declarations && symbol.declarations.length > 1) {
 					context.report({
 						node: node.id,
 						messageId: "enumMergingViolation",

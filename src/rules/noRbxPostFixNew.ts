@@ -1,5 +1,6 @@
 import ts from "typescript";
-import { getConstrainedTypeAtLocation, getParserServices, makeRule } from "../util/rules";
+import { getConstrainedTypeAtLocation, makeRule } from "../util/rules";
+import { ESLintUtils } from "@typescript-eslint/utils";
 
 const dataTypes = [
 	"CFrameConstructor",
@@ -20,7 +21,7 @@ export const noRbxPostFixNew = makeRule<[], ViolationType>({
 		type: "problem",
 		docs: {
 			description: "Bans calling .new() on Roblox objects (helps transition to TS)",
-			recommended: "error",
+			recommended: "recommended",
 			requiresTypeChecking: true,
 		},
 		fixable: "code",
@@ -31,7 +32,7 @@ export const noRbxPostFixNew = makeRule<[], ViolationType>({
 	},
 	defaultOptions: [],
 	create(context) {
-		const service = getParserServices(context);
+		const service = ESLintUtils.getParserServices(context);
 		const checker = service.program.getTypeChecker();
 
 		return {

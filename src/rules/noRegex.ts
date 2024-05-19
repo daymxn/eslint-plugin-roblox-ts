@@ -7,7 +7,7 @@ export const noRegex = makeRule<[], "regexViolation">({
 		type: "problem",
 		docs: {
 			description: "Disallows the regex operator",
-			recommended: "error",
+			recommended: "recommended",
 			requiresTypeChecking: false,
 		},
 		schema: [],
@@ -17,7 +17,8 @@ export const noRegex = makeRule<[], "regexViolation">({
 	},
 	defaultOptions: [],
 	create(context) {
-		const sourceCode = context.getSourceCode();
+		const sourceCode = context.sourceCode;
+
 		return {
 			Literal(node) {
 				const token = sourceCode.getFirstToken(node);

@@ -1,4 +1,5 @@
-import { getParserServices, makeRule } from "../util/rules";
+import { ESLintUtils } from "@typescript-eslint/utils";
+import { makeRule } from "../util/rules";
 import { getType, isArrayType, isPossiblyType } from "../util/types";
 
 function makeViolationText(name: string) {
@@ -12,7 +13,7 @@ export const noArrayPairs = makeRule<[], "arrayPairsViolation" | "arrayIPairsVio
 		type: "problem",
 		docs: {
 			description: "Disallows usage of pairs() and ipairs() with Array<T>",
-			recommended: "warn",
+			recommended: "recommended",
 			requiresTypeChecking: true,
 		},
 		schema: [],
@@ -23,8 +24,9 @@ export const noArrayPairs = makeRule<[], "arrayPairsViolation" | "arrayIPairsVio
 	},
 	defaultOptions: [],
 	create(context) {
-		const service = getParserServices(context);
+		const service = ESLintUtils.getParserServices(context);
 		const checker = service.program.getTypeChecker();
+
 		return {
 			CallExpression(esNode) {
 				const tsNode = service.esTreeNodeToTSNodeMap.get(esNode);
@@ -43,7 +45,6 @@ export const noArrayPairs = makeRule<[], "arrayPairsViolation" | "arrayIPairsVio
 								messageId: "arrayIPairsViolation",
 							});
 						}
-					} else {
 					}
 				}
 			},

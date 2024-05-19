@@ -1,5 +1,6 @@
 import ts from "typescript";
-import { getParserServices, makeRule } from "../util/rules";
+import { makeRule } from "../util/rules";
+import { ESLintUtils } from "@typescript-eslint/utils";
 
 export const noPrecedingSpreadElementName = "no-preceding-spread-element";
 export const noPrecedingSpreadElement = makeRule<[], "noPrecedingSpreadElementViolation">({
@@ -8,7 +9,7 @@ export const noPrecedingSpreadElement = makeRule<[], "noPrecedingSpreadElementVi
 		type: "problem",
 		docs: {
 			description: "Bans spread elements not last in a list of arguments from being used",
-			recommended: "error",
+			recommended: "recommended",
 			requiresTypeChecking: false,
 		},
 		schema: [],
@@ -18,7 +19,7 @@ export const noPrecedingSpreadElement = makeRule<[], "noPrecedingSpreadElementVi
 	},
 	defaultOptions: [],
 	create(context) {
-		const service = getParserServices(context);
+		const service = ESLintUtils.getParserServices(context);
 		return {
 			SpreadElement(node) {
 				const tsNode = service.esTreeNodeToTSNodeMap.get(node);

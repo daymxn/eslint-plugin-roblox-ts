@@ -1,5 +1,5 @@
-import { AST_NODE_TYPES, TSESTree } from "@typescript-eslint/experimental-utils";
-import { ExpressionWithTest, getParserServices, makeRule } from "../util/rules";
+import { AST_NODE_TYPES, ESLintUtils, TSESTree } from "@typescript-eslint/utils";
+import { ExpressionWithTest, makeRule } from "../util/rules";
 import { getType, isEmptyStringType, isNaNType, isNumberLiteralType, isPossiblyType } from "../util/types";
 
 export const luaTruthinessName = "lua-truthiness";
@@ -9,7 +9,6 @@ export const luaTruthiness = makeRule<[], "falsyStringNumberCheck">({
 		type: "problem",
 		docs: {
 			description: "Warns against falsy strings and numbers",
-			recommended: false,
 			requiresTypeChecking: true,
 		},
 		schema: [],
@@ -21,7 +20,7 @@ export const luaTruthiness = makeRule<[], "falsyStringNumberCheck">({
 	},
 	defaultOptions: [],
 	create(context) {
-		const service = getParserServices(context);
+		const service = ESLintUtils.getParserServices(context);
 		const checker = service.program.getTypeChecker();
 
 		function checkTruthy(node: TSESTree.Node) {

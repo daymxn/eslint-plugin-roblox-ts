@@ -1,4 +1,4 @@
-import { TSESLint } from "@typescript-eslint/experimental-utils";
+import { TSESLint } from "@typescript-eslint/utils";
 import * as ruleImports from "./rules";
 import { makeRule, robloxTSSettings } from "./util/rules";
 
@@ -31,6 +31,7 @@ const makePlugin = (obj: {
 			}
 		}
 	}
+
 	return obj;
 };
 
@@ -43,6 +44,7 @@ function getRules() {
 			typeof makeRule
 		>;
 	}
+
 	return rules;
 }
 

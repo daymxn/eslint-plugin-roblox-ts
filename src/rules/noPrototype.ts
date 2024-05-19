@@ -1,5 +1,6 @@
 import ts from "typescript";
-import { getParserServices, makeRule } from "../util/rules";
+import { makeRule } from "../util/rules";
+import { ESLintUtils } from "@typescript-eslint/utils";
 
 export const noPrototypeName = "no-prototype";
 export const noPrototype = makeRule<[], "prototypeViolation">({
@@ -8,7 +9,7 @@ export const noPrototype = makeRule<[], "prototypeViolation">({
 		type: "problem",
 		docs: {
 			description: "Bans prototype from being used",
-			recommended: "error",
+			recommended: "recommended",
 			requiresTypeChecking: false,
 		},
 		messages: {
@@ -18,7 +19,7 @@ export const noPrototype = makeRule<[], "prototypeViolation">({
 	},
 	defaultOptions: [],
 	create(context) {
-		const service = getParserServices(context);
+		const service = ESLintUtils.getParserServices(context);
 		return {
 			MemberExpression(node) {
 				const tsNode = service.esTreeNodeToTSNodeMap.get(node);

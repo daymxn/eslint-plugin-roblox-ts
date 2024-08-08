@@ -4,11 +4,9 @@ import { makeRule, robloxTSSettings } from "./util/rules";
 
 /** We just use this for intellisense */
 const makePlugin = (obj: {
-	configs: {
-		[s: string]: { rules: { [a: string]: "error" | "warn" | "off" } };
-	};
+	configs: Record<string, { rules: Record<string, "error" | "warn" | "off"> }>;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	rules: { [s: string]: TSESLint.RuleModule<any, any, any> };
+	rules: Record<string, TSESLint.RuleModule<any, any, any>>;
 }) => {
 	const ruleNames = new Set<string>();
 	const { rules, configs } = obj;
@@ -36,7 +34,7 @@ const makePlugin = (obj: {
 };
 
 function getRules() {
-	const rules: { [K: string]: ReturnType<typeof makeRule> } = {};
+	const rules: Record<string, ReturnType<typeof makeRule>> = {};
 	for (const [i, ruleName] of Object.entries(ruleImports).filter(t => t[0].endsWith("Name")) as Array<
 		[string, string]
 	>) {

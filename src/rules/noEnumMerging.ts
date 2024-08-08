@@ -8,7 +8,7 @@ export const noEnumMerging = makeRule<[], "enumMergingViolation">({
 		type: "problem",
 		docs: {
 			description: "Bans enum declaration merging",
-			recommended: "recommended",
+			recommended: true,
 			requiresTypeChecking: true,
 		},
 		messages: {

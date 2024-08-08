@@ -13,7 +13,7 @@ export const noArrayPairs = makeRule<[], "arrayPairsViolation" | "arrayIPairsVio
 		type: "problem",
 		docs: {
 			description: "Disallows usage of pairs() and ipairs() with Array<T>",
-			recommended: "recommended",
+			recommended: true,
 			requiresTypeChecking: true,
 		},
 		schema: [],

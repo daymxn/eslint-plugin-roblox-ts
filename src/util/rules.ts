@@ -1,8 +1,13 @@
-import { ESLintUtils, TSESTree, TSESLint, ParserServices } from "@typescript-eslint/utils";
+import { ESLintUtils, TSESTree, ParserServices } from "@typescript-eslint/utils";
 import ts from "typescript";
 
-export const makeRule = ESLintUtils.RuleCreator(name => {
-	return name;
+interface RuleMetaData {
+	recommended?: boolean;
+	requiresTypeChecking?: boolean;
+}
+
+export const makeRule = ESLintUtils.RuleCreator<RuleMetaData>(name => {
+	return `https://github.com/roblox-ts/eslint-plugin-roblox-ts/tree/master/src/rules/${name}.ts`;
 });
 
 type ExtractStringMembers<T> = Extract<T[keyof T], string>;
@@ -10,9 +15,7 @@ type ExtractStringMembers<T> = Extract<T[keyof T], string>;
 export const robloxTSSettings = (o: {
 	[K in ExtractStringMembers<typeof import("../rules")>]: "error" | "warn" | "off";
 }) => {
-	const settings: {
-		[K: string]: "error" | "warn" | "off";
-	} = {};
+	const settings: Record<string, "error" | "warn" | "off"> = {};
 
 	for (const [name, setting] of Object.entries(o)) {
 		settings[`roblox-ts/${name}`] = setting;

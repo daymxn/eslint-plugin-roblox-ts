@@ -8,7 +8,7 @@ export const noGettersOrSetters = makeRule<[], "getterSetterViolation">({
 		type: "problem",
 		docs: {
 			description: "Disallows getters and setters",
-			recommended: "recommended",
+			recommended: true,
 			requiresTypeChecking: false,
 		},
 		schema: [],

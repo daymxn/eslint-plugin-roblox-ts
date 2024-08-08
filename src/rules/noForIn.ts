@@ -7,7 +7,7 @@ export const noForIn = makeRule<[], "forInViolation">({
 		type: "problem",
 		docs: {
 			description: "Disallows iterating with a for-in loop",
-			recommended: "recommended",
+			recommended: true,
 			requiresTypeChecking: false,
 		},
 		messages: {

@@ -8,7 +8,7 @@ export const misleadingLuatupleChecks = makeRule<[], "bannedLuaTupleCheck">({
 		type: "problem",
 		docs: {
 			description: "Bans LuaTuples boolean expressions",
-			recommended: "recommended",
+			recommended: true,
 			requiresTypeChecking: true,
 		},
 		schema: [],

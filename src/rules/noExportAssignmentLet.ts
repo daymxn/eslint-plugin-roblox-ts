@@ -10,7 +10,7 @@ export const noExportAssignmentLet = makeRule<[], "noExportAssignmentLetViolatio
 		type: "problem",
 		docs: {
 			description: "Bans using `export =` on a let variable",
-			recommended: "recommended",
+			recommended: true,
 			requiresTypeChecking: false,
 		},
 		messages: {

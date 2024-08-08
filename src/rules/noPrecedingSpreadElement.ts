@@ -9,7 +9,7 @@ export const noPrecedingSpreadElement = makeRule<[], "noPrecedingSpreadElementVi
 		type: "problem",
 		docs: {
 			description: "Bans spread elements not last in a list of arguments from being used",
-			recommended: "recommended",
+			recommended: true,
 			requiresTypeChecking: false,
 		},
 		schema: [],

@@ -21,7 +21,7 @@ export const noRbxPostFixNew = makeRule<[], ViolationType>({
 		type: "problem",
 		docs: {
 			description: "Bans calling .new() on Roblox objects (helps transition to TS)",
-			recommended: "recommended",
+			recommended: true,
 			requiresTypeChecking: true,
 		},
 		fixable: "code",

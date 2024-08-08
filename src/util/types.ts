@@ -46,7 +46,7 @@ function isPossiblyTypeInner(type: ts.Type, callback: (type: ts.Type) => boolean
 		}
 
 		// type variable without constraint, any, or unknown
-		if (!!(type.flags & (ts.TypeFlags.TypeVariable | ts.TypeFlags.Any | ts.TypeFlags.Unknown))) {
+		if (type.flags & (ts.TypeFlags.TypeVariable | ts.TypeFlags.Any | ts.TypeFlags.Unknown)) {
 			return true;
 		}
 
@@ -83,7 +83,7 @@ export function isBooleanType(type: ts.Type) {
 }
 
 export function isBooleanLiteralType(typeChecker: ts.TypeChecker, type: ts.Type, value: boolean) {
-	if (!!(type.flags & ts.TypeFlags.BooleanLiteral)) {
+	if (type.flags & ts.TypeFlags.BooleanLiteral) {
 		const valueType = value ? typeChecker.getTrueType() : typeChecker.getFalseType();
 		return type === valueType;
 	}

@@ -11,7 +11,7 @@ export const noAny = makeRule<[], "anyViolation">({
 		type: "problem",
 		docs: {
 			description: "Bans prototype from being used",
-			recommended: "recommended",
+			recommended: true,
 			requiresTypeChecking: true,
 		},
 		messages: {

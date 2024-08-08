@@ -1,13 +1,20 @@
 {
 	"name": "eslint-plugin-roblox-ts",
-	"type": "module",
+	"type": "commonjs",
 	"version": "0.0.36",
 	"main": "out/index.js",
 	"files": [
 		"out"
 	],
+	"types": "out/index.d.ts",
 	"engines": {
 		"node": ">=0.10.0"
+	},
+	"exports": {
+		".": {
+			"types": "./out/index.d.ts",
+			"default": "./out/index.js"
+		}
 	},
 	"scripts": {
 		"build": "tsc",
@@ -20,10 +27,11 @@
 	},
 	"dependencies": {
 		"@types/node": "^22.1.0",
-		"@typescript-eslint/utils": "^8.0.0"
+		"@typescript-eslint/utils": "^8.0.1"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.8.0",
+		"@types/eslint": "^9.6.0",
 		"@types/eslint__js": "^8.42.3",
 		"@typescript-eslint/eslint-plugin": "^8.0.0",
 		"@typescript-eslint/parser": "^8.0.0",

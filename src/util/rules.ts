@@ -1,7 +1,7 @@
 import { ESLintUtils, TSESTree, ParserServices } from "@typescript-eslint/utils";
 import ts from "typescript";
 
-interface RuleMetaData {
+export interface RuleMetaData {
 	recommended?: boolean;
 	requiresTypeChecking?: boolean;
 }
@@ -9,6 +9,8 @@ interface RuleMetaData {
 export const makeRule = ESLintUtils.RuleCreator<RuleMetaData>(name => {
 	return `https://github.com/roblox-ts/eslint-plugin-roblox-ts/tree/master/src/rules/${name}.ts`;
 });
+
+export type RobloxTsRule = ReturnType<typeof makeRule>;
 
 type ExtractStringMembers<T> = Extract<T[keyof T], string>;
 

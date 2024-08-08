@@ -1,10 +1,10 @@
 import { TSESLint } from "@typescript-eslint/utils";
 import * as ruleImports from "./rules";
-import { makeRule, robloxTSSettings } from "./util/rules";
+import { robloxTSSettings, type RobloxTsRule } from "./util/rules";
 
 /** We just use this for intellisense */
 const makePlugin = (obj: {
-	configs: Record<string, { rules: Record<string, "error" | "warn" | "off"> }>;
+	configs: Record<string, { name: string; plugins: object; rules: Record<string, "error" | "warn" | "off"> }>;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	rules: Record<string, TSESLint.RuleModule<any, any, any>>;
 }) => {
@@ -13,10 +13,6 @@ const makePlugin = (obj: {
 
 	for (const ruleName in rules) {
 		ruleNames.add(ruleName);
-		const url = rules[ruleName].meta.docs?.url;
-		if (ruleName !== url) {
-			throw new Error(`Name mismatch in eslint-plugin-roblox-ts: ${ruleName} vs ${url}`);
-		}
 	}
 
 	for (const configName in configs) {
@@ -34,22 +30,28 @@ const makePlugin = (obj: {
 };
 
 function getRules() {
-	const rules: Record<string, ReturnType<typeof makeRule>> = {};
+	const rules: Record<string, RobloxTsRule> = {};
 	for (const [i, ruleName] of Object.entries(ruleImports).filter(t => t[0].endsWith("Name")) as Array<
 		[string, string]
 	>) {
-		rules[ruleName as string] = ruleImports[i.slice(0, -4) as keyof typeof ruleImports] as ReturnType<
-			typeof makeRule
-		>;
+		rules[ruleName as string] = ruleImports[i.slice(0, -4) as keyof typeof ruleImports] as RobloxTsRule;
 	}
 
 	return rules;
 }
 
-export = makePlugin({
-	rules: getRules(),
+const rules = getRules();
+
+const plugin = makePlugin({
+	rules: rules,
 	configs: {
 		recommended: {
+			name: "roblox-ts/recommended",
+			plugins: {
+				["roblox-ts"]: {
+					rules: rules,
+				},
+			},
 			rules: {
 				...robloxTSSettings({
 					"no-any": "off",
@@ -100,3 +102,12 @@ export = makePlugin({
 		},
 	},
 });
+
+const configs = plugin.configs;
+
+export default {
+	rules,
+	configs,
+};
+
+export { rules, configs };

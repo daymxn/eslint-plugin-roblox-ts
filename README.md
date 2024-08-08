@@ -19,6 +19,7 @@ Make sure the following settings are in your settings file (`Ctrl + ,` to open t
 
 These are according to my preferences, so feel free to change this according to your own desires:
 ```json
+    "eslint.useFlatConfig": true,
 	"files.trimTrailingWhitespace": true,
 	"files.insertFinalNewline": true,
 	"files.trimFinalNewlines": true,
@@ -40,64 +41,61 @@ These are according to my preferences, so feel free to change this according to 
 ```
 
 ## Step 3: Setup the eslint config file
-Make a file named `.eslintrc` and place this in the contents.
+Make a file named `eslint.config.mjs` and place this in the contents.
 
-```json
+```mjs
 {
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "jsx": true,
-        "useJSXTextNode": true,
-        "ecmaVersion": 2018,
-        "sourceType": "module",
-        "project": "./tsconfig.json"
-    },
-    "plugins": [
-        "roblox-ts",
-        "@typescript-eslint",
-        "@typescript-eslint/eslint-plugin",
-        "prettier"
-    ],
-    "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended",
-        "plugin:roblox-ts/recommended"
-    ],
-    "rules": {
-        "prettier/prettier": "warn",
-        "@typescript-eslint/array-type": [
-            "warn",
-            {
-                "default": "generic",
-                "readonly": "generic"
-            }
-        ],
-        "@typescript-eslint/no-unused-vars": "off",
-        "@typescript-eslint/explicit-function-return-type": "off",
-        "@typescript-eslint/no-namespace": "off",
-        "@typescript-eslint/no-non-null-assertion": "off",
-        "@typescript-eslint/no-empty-function": "warn",
-	"prefer-const": [
-		"warn",
-		{
-			"destructuring": "all"
-		}
-	],
-        "no-undef-init": "error"
-    }
-}
-```
-If you have a pre-existing `.prettierrc` file, you can keep it, and eslint will pick it up and use that.
-If not, you can create it with this recommended config:
-```json
-{
-	"semi": true,
-	"trailingComma": "all",
-	"singleQuote": false,
-	"printWidth": 120,
-	"tabWidth": 4,
-	"useTabs": true
+import eslint from "@eslint/js";
+import tseslint from "typescript-eslint";
+import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
+import eslintPluginRoblox from "eslint-plugin-roblox-ts";
+
+export default tseslint.config(
+	eslint.configs.recommended,
+	...tseslint.configs.recommended,
+	eslintPluginPrettierRecommended,
+	eslintPluginRoblox.configs.recommended,
+	{
+		rules: {
+			"prettier/prettier": [
+				"warn",
+				{
+					semi: true,
+					trailingComma: "all",
+					singleQuote: false,
+					printWidth: 120,
+					tabWidth: 4,
+					useTabs: true,
+					arrowParens: "avoid",
+				},
+			],
+			"@typescript-eslint/no-unused-vars": "off",
+			"@typescript-eslint/explicit-function-return-type": "off",
+			"@typescript-eslint/no-namespace": "off",
+			"@typescript-eslint/no-non-null-assertion": "off",
+			"@typescript-eslint/no-empty-function": "warn",
+			"prefer-const": [
+				"warn",
+				{
+					destructuring: "all",
+				},
+			],
+			"no-undef-init": "error",
+		},
+	},
+	{
+		languageOptions: {
+			parserOptions: {
+				projectService: {
+					allowDefaultProject: ["*.mjs"],
+				},
+				ecmaVersion: 2018,
+				sourceType: "module",
+				tsconfigRootDir: "./tsconfig.json",
+			},
+		},
+	},
+);
 }
 ```
 
@@ -105,9 +103,7 @@ If not, you can create it with this recommended config:
 
 Run the following command:
 
-`npm i -D eslint prettier @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-config-prettier eslint-plugin-prettier eslint-plugin-roblox-ts`
-
-<!-- For roact development: npm i -D eslint-config-react -->
+`npm install --save-dev eslint @eslint/js @types/eslint__js typescript typescript-eslint eslint-plugin-prettier eslint-plugin-roblox-ts`
 
 ## Step 5: Reload window
 Type `Ctrl+Shift+P` and select `Developer: Reload Window`. 

@@ -7,5 +7,17 @@
 	"files.eol": "\n",
 	"typescript.tsdk": "node_modules\\typescript\\lib",
 	"typescript.preferences.importModuleSpecifier": "non-relative",
-	"typescript.preferences.quoteStyle": "double"
+	"typescript.preferences.quoteStyle": "double",
+	"eslint.useFlatConfig": true,
+	// Enable eslint for all supported languages
+	"eslint.validate": [
+		"typescript",
+		"typescriptreact"
+	],
+	// Currently required to enable .ts config files
+	"eslint.options": {
+		"flags": [
+			"unstable_ts_config"
+		]
+	}
 }

@@ -1,5 +1,3 @@
-// @ts-check
-
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 
@@ -43,7 +41,7 @@ export default tseslint.config(
 				},
 				ecmaVersion: 2018,
 				sourceType: "module",
-				tsconfigRootDir: import.meta.dirname,
+				tsconfigRootDir: "./tsconfig.json",
 			},
 		},
 	},

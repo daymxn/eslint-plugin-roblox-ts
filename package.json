@@ -20,7 +20,7 @@
 		"build": "tsc",
 		"build-watch": "tsc -w",
 		"prepublishOnly": "npm run build",
-		"eslint": "eslint \"src/**/*.ts\" --max-warnings 0"
+		"eslint": "eslint \"src/**/*.ts\" --max-warnings 0 --flag unstable_ts_config"
 	},
 	"peerDependencies": {
 		"eslint": ">=9.3.0"
@@ -35,8 +35,9 @@
 		"@types/eslint__js": "^8.42.3",
 		"@typescript-eslint/eslint-plugin": "^8.0.0",
 		"@typescript-eslint/parser": "^8.0.0",
-		"eslint": "^9.8.0",
+		"eslint": "^9.9.0",
 		"eslint-plugin-prettier": "^5.2.0",
+		"jiti": "^1.21.6",
 		"typescript": "^5.5.4",
 		"typescript-eslint": "^8.0.1"
 	}

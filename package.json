@@ -19,7 +19,7 @@
 	"scripts": {
 		"build": "tsc",
 		"build-watch": "tsc -w",
-		"prepublishOnly": "npm run build",
+		"prepare": "npm run build",
 		"eslint": "eslint \"src/**/*.ts\" --max-warnings 0 --flag unstable_ts_config"
 	},
 	"peerDependencies": {

@@ -1,0 +1,17 @@
+import ts from "typescript";
+export declare function getType(typeChecker: ts.TypeChecker, node: ts.Node): ts.Type;
+export declare function isDefinitelyType(type: ts.Type, callback: (type: ts.Type) => boolean): boolean;
+export declare function isPossiblyType(type: ts.Type, callback: (type: ts.Type) => boolean): boolean;
+export declare function isDefinedType(type: ts.Type): boolean;
+export declare function isAnyType(type: ts.Type): boolean;
+export declare function isBooleanType(type: ts.Type): boolean;
+export declare function isBooleanLiteralType(typeChecker: ts.TypeChecker, type: ts.Type, value: boolean): boolean;
+export declare function isNumberType(type: ts.Type): boolean;
+export declare function isNumberLiteralType(type: ts.Type, value: number): boolean;
+export declare function isNaNType(type: ts.Type): boolean;
+export declare function isStringType(type: ts.Type): boolean;
+export declare function isObjectType(type: ts.Type): boolean;
+export declare function isUndefinedType(type: ts.Type): boolean;
+export declare function isEmptyStringType(type: ts.Type): boolean;
+export declare function isArrayType(checker: ts.TypeChecker, type: ts.Type): boolean;
+export declare function getTypeArguments(typeChecker: ts.TypeChecker, type: ts.Type): readonly ts.Type[];
